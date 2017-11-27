@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class JetpackJoyrideGame extends Game {
-
-	//public SpriteBatch batch;
+	public static final int HEIGHT = 768;
+	public static final int WIDTH = 1366;
 	public static SpriteBatch batch;
 	private Texture jetpackImg;
 
@@ -19,15 +19,11 @@ public class JetpackJoyrideGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new GameScreen(this));
-		jetpackImg = new Texture("jetpack.png");
 	}
 
 	@Override
 	public void render() {
-		SpriteBatch batch = JetpackJoyrideGame.batch;
-		batch.begin();
-		batch.draw(jetpackImg, 100, 100);
-		batch.end();
+		super.render();
 	}
 
 	@Override

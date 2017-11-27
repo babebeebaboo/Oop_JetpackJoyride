@@ -11,14 +11,17 @@ public class WorldRenderer {
     private BitmapFont font;
     World world;
     private Flyer flyer;
-    private Texture jetpackImg;
+    private Texture flyImg;
+    private Texture runImg;
     private JetpackJoyrideGame jetpackjoyrideGame;
 
     public WorldRenderer(JetpackJoyrideGame jetpackjoyrideGame, World world) {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
         SpriteBatch batch = jetpackjoyrideGame.batch;
         this.world = world;
-        jetpackImg = new Texture("jetpack.png");
+        flyImg = new Texture("flyer.png");
+        runImg = new Texture("runner.png");
+
         font = new BitmapFont();
     }
 
@@ -30,7 +33,13 @@ public class WorldRenderer {
 
         Vector2 pos = world.getFlyer().getPosition();
         batch.begin();
-        batch.draw(jetpackImg, pos.x ,pos.y);
+        if (pos.y > 0){
+            batch.draw(flyImg, pos.x ,pos.y);
+        }
+        else{
+            batch.draw(runImg, pos.x ,pos.y);
+        }
+
         font.draw(batch, "" + world.getScore(), 700, 60);
         batch.end();
     }

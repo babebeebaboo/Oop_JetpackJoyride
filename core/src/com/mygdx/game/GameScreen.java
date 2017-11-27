@@ -14,7 +14,7 @@ public class GameScreen extends ScreenAdapter {
 
     public GameScreen(JetpackJoyrideGame jetpackjoyrideGame){
         this.jetpackjoyrideGame = jetpackjoyrideGame;
-        jetpackImg = new Texture("jetpack.png");
+        jetpackImg = new Texture("flyer.png");
         world = new World(jetpackjoyrideGame);
         worldRenderer = new WorldRenderer(jetpackjoyrideGame, world);
     }

@@ -15,21 +15,13 @@ public class World {
     }
 
     private void updatePacmanDirection() {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            flyer.setNextDirection(Flyer.DIRECTION_UP);
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            flyer.jumpUp();
+            //System.out.println("UP");
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            flyer.setNextDirection(Flyer.DIRECTION_DOWN);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            flyer.setNextDirection(Flyer.DIRECTION_LEFT);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            flyer.setNextDirection(Flyer.DIRECTION_RIGHT);
-        }
-        if (!(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.DOWN)
-                || Gdx.input.isKeyPressed(Input.Keys.LEFT)|| Gdx.input.isKeyPressed(Input.Keys.RIGHT))) {
-            flyer.setNextDirection(Flyer.DIRECTION_STILL);
+        if (!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            flyer.jumpDown();
+            //System.out.println("DOWN");
         }
     }
 

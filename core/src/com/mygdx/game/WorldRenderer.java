@@ -14,34 +14,41 @@ public class WorldRenderer {
     private BitmapFont font;
     private Texture flyImg;
 
-    //-- Animation CREDIT: http://www.pixnbgames.com/blog/libgdx/frame-by-frame-animations-in-libgdx/--//
-    private TextureAtlas runningonRoofCharset,runningCharset;
+    /* Animation
+       CREDIT: http://www.pixnbgames.com/blog/libgdx/frame-by-frame-animations-in-libgdx/
+    */
     private static float FRAME_DURATION = .05f*2;
-    private Animation runningAnimation;
-    private Animation runningonRoofAnimation;
-    private TextureRegion runningFrame;
-    private TextureRegion runningonRoofFrame;
     private float elapsed_time = 0f;
-    //--END Animation --//
+
+    //Running
+    private TextureAtlas runningCharset;
+    private Animation runningAnimation;
+    private TextureRegion runningFrame;
+
+    //RunningOnRoof
+    private TextureAtlas runningonRoofCharset;
+    private Animation runningonRoofAnimation;
+    private TextureRegion runningonRoofFrame;
+
+    /* END Animation */
 
     public WorldRenderer(JetpackJoyrideGame jetpackjoyrideGame, World world) {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
-        SpriteBatch batch = jetpackjoyrideGame.batch;
         this.world = world;
         flyImg = new Texture("flyer.png");
         font = new BitmapFont();
 
-        //--- Running Animation ---//
+        /* Running Animation */
         runningCharset = new TextureAtlas( Gdx.files.internal("running.atlas") );
         Array<TextureAtlas.AtlasRegion> runningFrames = runningCharset.findRegions("running");
         runningAnimation = new Animation(FRAME_DURATION, runningFrames, Animation.PlayMode.LOOP);
-        //--- END Running Animation ---//
+        /* END Running Animation */
 
-        //--- Running Roof Animation ---//
+        /* Running Roof Animation */
         runningonRoofCharset = new TextureAtlas( Gdx.files.internal("runningonRoof.atlas") );
         Array<TextureAtlas.AtlasRegion> runningonRoofFrames = runningonRoofCharset.findRegions("running");
         runningonRoofAnimation = new Animation(FRAME_DURATION, runningonRoofFrames, Animation.PlayMode.LOOP);
-        //--- END Running Roof Animation ---//
+        /* END Running Roof Animation */
 
     }
 

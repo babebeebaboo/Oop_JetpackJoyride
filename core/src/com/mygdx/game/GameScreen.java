@@ -12,7 +12,7 @@ public class GameScreen extends ScreenAdapter {
     private JetpackJoyrideGame jetpackjoyrideGame;
     World world;
 
-    public GameScreen(JetpackJoyrideGame jetpackjoyrideGame){
+    public GameScreen(JetpackJoyrideGame jetpackjoyrideGame) {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
         jetpackImg = new Texture("flyer.png");
         world = new World(jetpackjoyrideGame);
@@ -28,8 +28,8 @@ public class GameScreen extends ScreenAdapter {
 
         worldRenderer.render(delta);
     }
-    public void update(float delta) {
 
+    public void update(float delta) {
         world.update(delta);
     }
 }

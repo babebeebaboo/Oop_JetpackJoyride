@@ -23,48 +23,53 @@ public class Flyer {
         return position;
     }
 
-    public void jumpUp(){
-        if(this.getRow() >= JetpackJoyrideGame.HEIGHT){
+    public void jumpUp() {
+        if (this.getRow() >= JetpackJoyrideGame.HEIGHT) {
             acceleration = 0;
-        }
-        else{
+        } else {
             acceleration = ACCELERATION;
         }
     }
-    public void jumpDown(){
-        if(this.getRow() <= 0){
+
+    public void jumpDown() {
+        if (this.getRow() <= 0) {
             acceleration = 0;
-        }
-        else{
+        } else {
             acceleration = -ACCELERATION;
         }
     }
+
     public void update() {
         speed += acceleration;
         //System.out.println(speed);
         position.y += speed;
-        if (position.y <= 0){
+        if (position.y <= 0) {
             position.y = 0;
             speed = 0;
         }
-        if(this.getRow() >= JetpackJoyrideGame.HEIGHT-HEIGHT){
-            position.y = JetpackJoyrideGame.HEIGHT-HEIGHT;
+        if (this.getRow() >= JetpackJoyrideGame.HEIGHT - HEIGHT) {
+            position.y = JetpackJoyrideGame.HEIGHT - HEIGHT;
             speed = 0;
         }
     }
+
     public int getRow() {
-        return ((int)position.y) ;
+        return ((int) position.y);
     }
+
     private int getColumn() {
-        return ((int)position.x) ;
+        return ((int) position.x);
     }
+
     public boolean isAtCenter() {
-        return ((((int) position.x ) ) == 0) && ((((int) position.y ) ) == 0);
+        return ((((int) position.x)) == 0) && ((((int) position.y)) == 0);
     }
-    public boolean isAtRoof(){
-        return position.y >= JetpackJoyrideGame.HEIGHT-HEIGHT;
+
+    public boolean isAtRoof() {
+        return position.y >= JetpackJoyrideGame.HEIGHT - HEIGHT;
     }
-    public boolean onTheFloor(){
+
+    public boolean onTheFloor() {
         return position.y == 0;
     }
 }

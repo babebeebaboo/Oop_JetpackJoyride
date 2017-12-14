@@ -13,11 +13,13 @@ public class WorldRenderer {
 
     private BitmapFont font;
     private Texture flyImg;
+    private Texture goldImg;
+
 
     /* Animation
        CREDIT: http://www.pixnbgames.com/blog/libgdx/frame-by-frame-animations-in-libgdx/
     */
-    private static float FRAME_DURATION = .05f*2;
+    private static float FRAME_DURATION = .05f * 2;
     private float elapsed_time = 0f;
 
     //Running
@@ -37,18 +39,20 @@ public class WorldRenderer {
         this.world = world;
         flyImg = new Texture("flyer.png");
         font = new BitmapFont();
+        goldImg = new Texture("jetpack.png");
 
         /* Running Animation */
-        runningCharset = new TextureAtlas( Gdx.files.internal("running.atlas") );
+        runningCharset = new TextureAtlas(Gdx.files.internal("running.atlas"));
         Array<TextureAtlas.AtlasRegion> runningFrames = runningCharset.findRegions("running");
         runningAnimation = new Animation(FRAME_DURATION, runningFrames, Animation.PlayMode.LOOP);
         /* END Running Animation */
 
         /* Running Roof Animation */
-        runningonRoofCharset = new TextureAtlas( Gdx.files.internal("runningonRoof.atlas") );
+        runningonRoofCharset = new TextureAtlas(Gdx.files.internal("runningonRoof.atlas"));
         Array<TextureAtlas.AtlasRegion> runningonRoofFrames = runningonRoofCharset.findRegions("running");
         runningonRoofAnimation = new Animation(FRAME_DURATION, runningonRoofFrames, Animation.PlayMode.LOOP);
         /* END Running Roof Animation */
+
 
     }
 
@@ -60,22 +64,27 @@ public class WorldRenderer {
         Flyer flyer = world.getFlyer();
         Vector2 pos = world.getFlyer().getPosition();
         batch.begin();
+        //GOLD
+        for (Gold g : world.gold) {
+            Vector2 gPos = g.getPosition();
+            System.out.println(g.number + " " + gPos.x + " " + gPos.y + " ");
+            batch.draw(goldImg, gPos.x, gPos.y);
+        }
 
-        if (pos.y >= JetpackJoyrideGame.HEIGHT-flyer.HEIGHT){
+        if (pos.y >= JetpackJoyrideGame.HEIGHT - flyer.HEIGHT) {
             elapsed_time += Gdx.graphics.getDeltaTime();
             runningonRoofFrame = (TextureRegion) runningonRoofAnimation.getKeyFrame(elapsed_time);
-            batch.draw(runningonRoofFrame, pos.x ,pos.y);
-        }
-        else if (pos.y > 0){
-            batch.draw(flyImg, pos.x ,pos.y);
-        }
-        else{
+            batch.draw(runningonRoofFrame, pos.x, pos.y);
+        } else if (pos.y > 0) {
+            batch.draw(flyImg, pos.x, pos.y);
+        } else {
             elapsed_time += Gdx.graphics.getDeltaTime();
             runningFrame = (TextureRegion) runningAnimation.getKeyFrame(elapsed_time);
-            batch.draw(runningFrame, pos.x ,pos.y);
+            batch.draw(runningFrame, pos.x, pos.y);
         }
 
-        font.draw(batch, "" + world.getScore(), 700, 60);
+
+        font.draw(batch, "" + world.getScore(), JetpackJoyrideGame.WIDTH - 100 + 20 - 20, JetpackJoyrideGame.HEIGHT - 100 + 20);
         batch.end();
     }
 }

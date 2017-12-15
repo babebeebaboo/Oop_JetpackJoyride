@@ -10,7 +10,6 @@ public class Block {
     public static final int HEIGHT = 40;
     public static final int WIDTH = 40;
     public static final double ACCELERATION = 0.13;
-    private double speed = 4;
     private double acceleration = 0;
 
     private Vector2 position;
@@ -22,15 +21,15 @@ public class Block {
     private boolean isOnTop;
 
     public Block(int x, int y, int length, boolean isOnTop, World world) {
-        position = new Vector2(x, y);
+        position = new Vector2(x-WIDTH/2, y);
         this.world = world;
         this.length = length;
         blockImg = new Texture("wall.png");
         this.isOnTop = isOnTop;
         if (isOnTop) {
-            rectangle = new Rectangle(x, y - HEIGHT * length, WIDTH, HEIGHT * length);
+            rectangle = new Rectangle(x-WIDTH/2, y - HEIGHT * length, WIDTH, HEIGHT * length);
         } else {
-            rectangle = new Rectangle(x, y, WIDTH, HEIGHT * length);
+            rectangle = new Rectangle(x-WIDTH/2, y, WIDTH, HEIGHT * length);
         }
     }
 
@@ -47,7 +46,7 @@ public class Block {
     }
 
     public void update() {
-        position.x -= speed;
+        position.x -= world.speed;
         if (isOnTop) {
             rectangle.setPosition(position.x, position.y - HEIGHT * length + 40);
 

@@ -75,6 +75,10 @@ public class Flyer {
         rectangle.setPosition(position.x, position.y);
     }
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
     public boolean checkCollisionBlock(Block b) {
         return Intersector.overlaps(b.getRectangle(), rectangle);
     }

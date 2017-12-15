@@ -68,9 +68,8 @@ public class WorldRenderer {
         Flyer flyer = world.getFlyer();
         Vector2 pos = world.getFlyer().getPosition();
         batch.begin();
-        //shapeRenderer.begin(ShapeType.Line);
-        //shapeRenderer.rect(world.getFlyer().getRectangle().x, world.getFlyer().getRectangle().y
-        //        , world.getFlyer().getRectangle().width, world.getFlyer().getRectangle().height);
+        shapeRenderer.begin(ShapeType.Line);
+        //shapeRenderer.rect(world.getFlyer().getRectangle().x, world.getFlyer().getRectangle().y, world.getFlyer().getRectangle().width, world.getFlyer().getRectangle().height);
 
         batch.draw(bgImg, 0, 0);
 
@@ -106,7 +105,7 @@ public class WorldRenderer {
         // todo change how to print score aka Font/size
         font.draw(batch, "" + world.getScore(), JetpackJoyrideGame.WIDTH - 100 + 20 - 20, JetpackJoyrideGame.HEIGHT - 100 + 20);
         batch.end();
-        //shapeRenderer.end();
+        shapeRenderer.end();
 
     }
 

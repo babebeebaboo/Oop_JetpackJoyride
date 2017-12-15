@@ -18,6 +18,7 @@ public class World {
     private boolean removeBlock = false;
     public LinkedList<Block> block = new LinkedList<Block>();
     private int frame = 0;
+    public int speed = 4;
 
     World(JetpackJoyrideGame jetpackjoyrideGame) {
         flyer = new Flyer(100, 100, this);
@@ -40,13 +41,17 @@ public class World {
 
     public int createBlock() {
         int top, down;
-        block.add(new Block(jetpackjoyrideGame.WIDTH, jetpackjoyrideGame.HEIGHT - 40, random(1, 7),true, this));
+        block.add(new Block(jetpackjoyrideGame.WIDTH, jetpackjoyrideGame.HEIGHT - 40, random(1, maxBlocklength()),true, this));
         top = block.getLast().getLength();
-        block.add(new Block(jetpackjoyrideGame.WIDTH, 0, random(1, 7), false,this));
+        block.add(new Block(jetpackjoyrideGame.WIDTH, 0, random(1, maxBlocklength()), false,this));
         down = block.getLast().getLength();
         return random((down + 1) * block.getLast().HEIGHT, jetpackjoyrideGame.HEIGHT - (top + 1) * block.getLast().HEIGHT);
     }
-
+    private int maxBlocklength(){
+        if(score<=10)return 1;
+        if(score<70)return (int)score/10;
+        else return 7;
+    }
     public void createMap() {
         if (random(0, 100) < 20) {
             int posGold = createBlock();
@@ -81,6 +86,8 @@ public class World {
             block.removeFirst();
         }
         frame++;
+        setSpeedbyScore();
+
     }
 
     public int getScore() {
@@ -92,6 +99,36 @@ public class World {
 
     public void increaseScore() {
         score += 1;
+    }
+    public void setSpeedbyScore() {
+        if(score < 0) {
+            speed = 0;
+        }
+        else if(score<10){
+            speed=3;
+        }
+        else if(score< 20){
+            speed = 4;
+        }
+        else if(score< 30){
+            speed = 5;
+        }
+        else if(score< 40){
+            speed = 6;
+        }
+        else if(score< 50){
+            speed = 7;
+        }
+
+        else if(score< 60){
+            speed = 8;
+        }
+        else if(score< 70){
+            speed = 9;
+        }
+        else if(score< 80){
+            speed = 10;
+        }
     }
 
     Flyer getFlyer() {

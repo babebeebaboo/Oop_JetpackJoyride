@@ -13,7 +13,6 @@ public class Gold {
     public static final int WIDTH = 40;
     public static final int RADIUS = 20;
     public static final double ACCELERATION = 0.13;
-    private double speed = 4;
     private double acceleration = 0;
 
 
@@ -33,7 +32,7 @@ public class Gold {
         this.collision = false;
         goldImg = new Texture("jetpack.png");
         transparentImg = new Texture("transparent.png");
-        circle = new Circle(position,WIDTH/2);
+        circle = new Circle(x,y,WIDTH/2);
     }
 
     public Circle getCircle() {
@@ -50,12 +49,12 @@ public class Gold {
     public Vector2 getPosition(){
         return position;
     }
-    public void setSpeed(double spd){
-        this.speed= spd;
+    public void setSpeed(int spd){
+        world.speed = spd;
 
     }
     public void update() {
-        position.x -= speed;
+        position.x -= world.speed;
         circle.setPosition(position.x,position.y);
     }
 

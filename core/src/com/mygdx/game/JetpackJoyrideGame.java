@@ -8,15 +8,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class JetpackJoyrideGame extends Game {
     public static final int HEIGHT = 768;
     public static final int WIDTH = 1366;
     public static SpriteBatch batch;
+    ShapeRenderer shapeRenderer;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         setScreen(new GameScreen(this));
     }
 

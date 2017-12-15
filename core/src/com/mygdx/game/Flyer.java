@@ -1,22 +1,33 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.pow;
+import static javafx.application.Platform.exit;
+
 public class Flyer {
-    public static final int HEIGHT = 100;
-    public static final int WIDTH = 100;
+    public static final int HEIGHT = 80;
+    public static final int WIDTH = 70;
     public static final double ACCELERATION = 0.13;
     public double speed = 0;
     private double acceleration = 0;
-
+    public Rectangle rectangle;
 
     private Vector2 position;
+    private Vector2 gPosition;
+    private Vector2 fPosition;
+
+
     private World world;
 
 
     public Flyer(int x, int y, World world) {
         position = new Vector2(x, y);
         this.world = world;
+        rectangle = new Rectangle( x, y,WIDTH,HEIGHT);
     }
 
     public Vector2 getPosition() {
@@ -51,6 +62,70 @@ public class Flyer {
             position.y = JetpackJoyrideGame.HEIGHT - HEIGHT;
             speed = 0;
         }
+        for (Gold g : world.gold) {
+            if (checkCollisionGold(g)) {
+                world.increaseScore();
+                g.setCollision();
+            }
+        }
+        for (Block b : world.block) {
+            if (checkCollisionBlock(b)) {
+                //world.increaseScore();
+                //g.setCollision();
+                //System.exit(0);
+                world.setScore(-1);
+            }
+        }
+        rectangle.setPosition(position.x,position.y);
+    }
+
+    public boolean checkCollisionBlock(Block b) {
+        //b.getPosition().x+40
+        //position.x+WIDTH
+        /*
+        if (abs(b.getPosition().x - position.x) <= 20) {
+            if (b.getPosition().y < 50) {//ล่าง
+                if (abs(b.getPosition().y - position.y) < HEIGHT + 40 * b.getLength()) {
+                    System.out.println("TRUEDOWN");
+                    return true;
+                }
+            }
+            else {//บน
+                if (abs(b.getPosition().y - position.y) < HEIGHT + 40 * b.getLength()) {
+                    System.out.println("TRUEUP");
+                    return true;
+                }
+            }
+
+        }
+        return false;
+        */
+        System.out.println("B");
+        return Intersector.overlaps(b.getRectangle(), rectangle);
+//return false;
+    }
+
+    public boolean checkCollisionGold(Gold g) {
+/*
+        if (g.collision == true) {
+            return false;
+        }
+        double length = pow((pow((g.getPosition().x - position.x), 2) + pow((g.getPosition().y - position.y), 2)), 0.5);
+        if (length < 60) {
+            return true;
+        } else {
+            return false;
+        }
+*/
+        System.out.println("G");
+
+        return Intersector.overlaps(g.getCircle(), rectangle);
+        //return false;
+
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
     public int getRow() {

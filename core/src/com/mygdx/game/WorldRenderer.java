@@ -68,9 +68,9 @@ public class WorldRenderer {
         Flyer flyer = world.getFlyer();
         Vector2 pos = world.getFlyer().getPosition();
         batch.begin();
-        shapeRenderer.begin(ShapeType.Line);
-        shapeRenderer.rect(world.getFlyer().getRectangle().x, world.getFlyer().getRectangle().y
-                , world.getFlyer().getRectangle().width, world.getFlyer().getRectangle().height);
+        //shapeRenderer.begin(ShapeType.Line);
+        //shapeRenderer.rect(world.getFlyer().getRectangle().x, world.getFlyer().getRectangle().y
+        //        , world.getFlyer().getRectangle().width, world.getFlyer().getRectangle().height);
 
         batch.draw(bgImg, 0, 0);
 
@@ -78,18 +78,17 @@ public class WorldRenderer {
         for (Gold g : world.gold) {
             Vector2 gPos = g.getPosition();
             batch.draw(g.getTexture(), gPos.x - g.RADIUS, gPos.y - g.RADIUS);
-            shapeRenderer.circle(g.getCircle().x, g.getCircle().y, g.getCircle().radius);
+            //shapeRenderer.circle(g.getCircle().x, g.getCircle().y, g.getCircle().radius);
         }
         for (Block b : world.block) {
             Vector2 bPos = b.getPosition();
             for (int i = 0; i < b.getLength(); i++) {
                 if (bPos.y > 500) {
                     batch.draw(b.getTexture(), bPos.x, bPos.y - 40 * i);
-                    shapeRenderer.rect(b.getRectangle().x, b.getRectangle().y, b.getRectangle().width, b.getRectangle().height);
+                    //shapeRenderer.rect(b.getRectangle().x, b.getRectangle().y, b.getRectangle().width, b.getRectangle().height);
                 } else {
                     batch.draw(b.getTexture(), bPos.x, bPos.y + 40 * i);
-                    shapeRenderer.rect(b.getRectangle().x, b.getRectangle().y, b.getRectangle().width, b.getRectangle().height);
-
+                    //shapeRenderer.rect(b.getRectangle().x, b.getRectangle().y, b.getRectangle().width, b.getRectangle().height);
                 }
             }
         }
@@ -104,10 +103,10 @@ public class WorldRenderer {
             runningFrame = (TextureRegion) runningAnimation.getKeyFrame(elapsed_time);
             batch.draw(runningFrame, pos.x+20, pos.y);
         }
-        System.out.println(pos.x + " " + pos.y);
+        // todo change how to print score aka Font/size
         font.draw(batch, "" + world.getScore(), JetpackJoyrideGame.WIDTH - 100 + 20 - 20, JetpackJoyrideGame.HEIGHT - 100 + 20);
         batch.end();
-        shapeRenderer.end();
+        //shapeRenderer.end();
 
     }
 

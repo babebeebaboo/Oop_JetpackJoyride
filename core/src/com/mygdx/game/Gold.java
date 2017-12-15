@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Gold {
+
+    //TODO: Give Gold a new Sprite
     public static final int HEIGHT = 40;
     public static final int WIDTH = 40;
     public static final int RADIUS = 20;

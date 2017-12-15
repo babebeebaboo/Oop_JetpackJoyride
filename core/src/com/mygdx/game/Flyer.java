@@ -20,14 +20,12 @@ public class Flyer {
     private Vector2 gPosition;
     private Vector2 fPosition;
 
-
     private World world;
-
 
     public Flyer(int x, int y, World world) {
         position = new Vector2(x, y);
         this.world = world;
-        rectangle = new Rectangle( x, y,WIDTH,HEIGHT);
+        rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
     public Vector2 getPosition() {
@@ -35,7 +33,7 @@ public class Flyer {
     }
 
     public void jumpUp() {
-        if (this.getRow() >= JetpackJoyrideGame.HEIGHT) {
+        if (position.y >= JetpackJoyrideGame.HEIGHT) {
             acceleration = 0;
         } else {
             acceleration = ACCELERATION;
@@ -43,7 +41,7 @@ public class Flyer {
     }
 
     public void jumpDown() {
-        if (this.getRow() <= 0) {
+        if (position.y <= 0) {
             acceleration = 0;
         } else {
             acceleration = -ACCELERATION;
@@ -52,99 +50,36 @@ public class Flyer {
 
     public void update() {
         speed += acceleration;
-        //System.out.println(speed);
         position.y += speed;
         if (position.y <= 0) {
             position.y = 0;
             speed = 0;
         }
-        if (this.getRow() >= JetpackJoyrideGame.HEIGHT - HEIGHT) {
+        if (position.y >= JetpackJoyrideGame.HEIGHT - HEIGHT) {
             position.y = JetpackJoyrideGame.HEIGHT - HEIGHT;
             speed = 0;
         }
         for (Gold g : world.gold) {
             if (checkCollisionGold(g)) {
-                world.increaseScore();
+                if (!g.collision) {
+                    world.increaseScore();
+                }
                 g.setCollision();
             }
         }
         for (Block b : world.block) {
             if (checkCollisionBlock(b)) {
-                //world.increaseScore();
-                //g.setCollision();
-                //System.exit(0);
                 world.setScore(-1);
             }
         }
-        rectangle.setPosition(position.x,position.y);
+        rectangle.setPosition(position.x, position.y);
     }
 
     public boolean checkCollisionBlock(Block b) {
-        //b.getPosition().x+40
-        //position.x+WIDTH
-        /*
-        if (abs(b.getPosition().x - position.x) <= 20) {
-            if (b.getPosition().y < 50) {//ล่าง
-                if (abs(b.getPosition().y - position.y) < HEIGHT + 40 * b.getLength()) {
-                    System.out.println("TRUEDOWN");
-                    return true;
-                }
-            }
-            else {//บน
-                if (abs(b.getPosition().y - position.y) < HEIGHT + 40 * b.getLength()) {
-                    System.out.println("TRUEUP");
-                    return true;
-                }
-            }
-
-        }
-        return false;
-        */
-        System.out.println("B");
         return Intersector.overlaps(b.getRectangle(), rectangle);
-//return false;
     }
 
     public boolean checkCollisionGold(Gold g) {
-/*
-        if (g.collision == true) {
-            return false;
-        }
-        double length = pow((pow((g.getPosition().x - position.x), 2) + pow((g.getPosition().y - position.y), 2)), 0.5);
-        if (length < 60) {
-            return true;
-        } else {
-            return false;
-        }
-*/
-        System.out.println("G");
-
         return Intersector.overlaps(g.getCircle(), rectangle);
-        //return false;
-
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    public int getRow() {
-        return ((int) position.y);
-    }
-
-    private int getColumn() {
-        return ((int) position.x);
-    }
-
-    public boolean isAtCenter() {
-        return ((((int) position.x)) == 0) && ((((int) position.y)) == 0);
-    }
-
-    public boolean isAtRoof() {
-        return position.y >= JetpackJoyrideGame.HEIGHT - HEIGHT;
-    }
-
-    public boolean onTheFloor() {
-        return position.y == 0;
     }
 }

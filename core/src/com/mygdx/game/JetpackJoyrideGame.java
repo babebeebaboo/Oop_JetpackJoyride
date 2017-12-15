@@ -14,8 +14,11 @@ public class JetpackJoyrideGame extends Game {
     public static final int HEIGHT = 768;
     public static final int WIDTH = 1366;
     public static SpriteBatch batch;
-    ShapeRenderer shapeRenderer;
+    public static ShapeRenderer shapeRenderer;
 
+    //todo Welcome Page
+    //todo Game Over Page
+    //todo items
     @Override
     public void create() {
         batch = new SpriteBatch();

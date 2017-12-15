@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Block {
+    //TODO: Give Block a new Sprite
+
     public static final int HEIGHT = 40;
     public static final int WIDTH = 40;
     public static final double ACCELERATION = 0.13;

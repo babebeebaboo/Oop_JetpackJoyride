@@ -1,0 +1,11 @@
+running.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+running
+  rotate: false
+  xy: 0, 0
+  size: 55, 100
+  orig: 55, 100
+  offset: 0, 0
+  index: 0

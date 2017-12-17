@@ -60,5 +60,4 @@ public class Gold {
         collision = true;
     }
 
-
 }

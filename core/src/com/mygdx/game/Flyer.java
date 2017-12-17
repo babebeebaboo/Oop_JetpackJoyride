@@ -24,7 +24,7 @@ public class Flyer {
     public Flyer(int x, int y, World world) {
         position = new Vector2(x, y);
         this.world = world;
-        rectangle = new Rectangle(x+20, y, WIDTH-20, HEIGHT);
+        rectangle = new Rectangle(x + 20, y, WIDTH - 20, HEIGHT);
         collectSound = audio.newSound(Gdx.files.internal("coin-sound-effect-trim2.mp3"));
     }
 
@@ -70,10 +70,10 @@ public class Flyer {
                 world.setGameOver();
             }
         }
-        if(world.isGameOver()){
+        if (world.isGameOver()) {
             jumpDown();
         }
-        rectangle.setPosition(position.x+20, position.y);
+        rectangle.setPosition(position.x + 20, position.y);
     }
 
     public boolean checkCollisionBlock(Block b) {

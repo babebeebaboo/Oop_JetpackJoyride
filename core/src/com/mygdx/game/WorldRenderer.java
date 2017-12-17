@@ -25,18 +25,18 @@ public class WorldRenderer {
        CREDIT: http://www.pixnbgames.com/blog/libgdx/frame-by-frame-animations-in-libgdx/
     */
 
-        private static float FRAME_DURATION = .05f * 2;
-        private float elapsed_time = 0f;
+    private static float FRAME_DURATION = .05f * 2;
+    private float elapsed_time = 0f;
 
-        //Running
-        private TextureAtlas runningCharset;
-        private Animation runningAnimation;
-        private TextureRegion runningFrame;
+    //Running
+    private TextureAtlas runningCharset;
+    private Animation runningAnimation;
+    private TextureRegion runningFrame;
 
-        //RunningOnRoof
-        private TextureAtlas runningonRoofCharset;
-        private Animation runningonRoofAnimation;
-        private TextureRegion runningonRoofFrame;
+    //RunningOnRoof
+    private TextureAtlas runningonRoofCharset;
+    private Animation runningonRoofAnimation;
+    private TextureRegion runningonRoofFrame;
 
     /* END Animation */
 

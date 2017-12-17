@@ -158,7 +158,7 @@ public class World {
         score += 1;
     }
 
-    public boolean isSpacePress(){
+    public boolean isSpacePress() {
         return Gdx.input.isKeyPressed(Input.Keys.SPACE);
     }
 

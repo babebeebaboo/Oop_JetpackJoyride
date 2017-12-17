@@ -2,9 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 
 import java.util.LinkedList;
 
+import static com.badlogic.gdx.Gdx.audio;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class World {
@@ -27,10 +29,22 @@ public class World {
     public int speed = 4;
     private boolean isGameRunning = true;
 
+
+
+    //HIGH SCORE
+    private static Preferences prefs;
+
     public World(JetpackJoyrideGame jetpackjoyrideGame) {
         flyer = new Flyer(100, 100, this);
         this.jetpackjoyrideGame = jetpackjoyrideGame;
         score = 0;
+
+
+        //High Score
+        prefs = Gdx.app.getPreferences("JetpackJoyride");
+        if (!prefs.contains("highscore")) {
+            prefs.putInteger("highscore", 0);
+        }
     }
 
     private void updatePacmanDirection() {
@@ -117,6 +131,15 @@ public class World {
         if (!isGameRunning) {
             speed = 0;
         }
+        //Garbadge Cleaner EXIT
+        if (isGameOverAndExit()) {
+            prefs.flush();
+            jetpackjoyrideGame.getThemeSound().stop();
+            jetpackjoyrideGame.getThemeSound().dispose();
+            flyer.getCollectSound().stop();
+            flyer.getCollectSound().dispose();
+            System.exit(1);
+        }
     }
 
     public void setSpeedbyScore() {
@@ -171,5 +194,9 @@ public class World {
 
     public int getScore() {
         return (int) score;
+    }
+
+    public static Preferences getPrefs() {
+        return prefs;
     }
 }

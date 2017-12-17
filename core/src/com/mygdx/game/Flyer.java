@@ -28,10 +28,6 @@ public class Flyer {
         collectSound = audio.newSound(Gdx.files.internal("coin-sound-effect-trim2.mp3"));
     }
 
-    public Vector2 getPosition() {
-        return position;
-    }
-
     public void jumpUp() {
         if (position.y >= JetpackJoyrideGame.HEIGHT) {
             acceleration = 0;
@@ -62,7 +58,7 @@ public class Flyer {
         for (Gold g : world.gold) {
             if (checkCollisionGold(g)) {
                 collectSound.stop();
-                collectSound.play();
+                collectSound.play(0.5f);
                 if (!g.collision) {
                     world.increaseScore();
                 }
@@ -73,6 +69,9 @@ public class Flyer {
             if (checkCollisionBlock(b)) {
                 world.setGameOver();
             }
+        }
+        if(world.isGameOver()){
+            jumpDown();
         }
         rectangle.setPosition(position.x, position.y);
     }
@@ -88,4 +87,13 @@ public class Flyer {
     public boolean checkCollisionGold(Gold g) {
         return Intersector.overlaps(g.getCircle(), rectangle);
     }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Sound getCollectSound() {
+        return collectSound;
+    }
+
 }

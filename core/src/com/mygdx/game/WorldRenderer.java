@@ -15,6 +15,7 @@ import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 public class WorldRenderer {
     private World world;
     private JetpackJoyrideGame jetpackjoyrideGame;
+    private boolean isRunning = false;
 
     private BitmapFont font;
     private Texture flyImg;
@@ -39,6 +40,7 @@ public class WorldRenderer {
     private TextureRegion runningonRoofFrame;
 
     /* END Animation */
+    private Sound themeSound;
 
     public WorldRenderer(JetpackJoyrideGame jetpackjoyrideGame, World world) {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
@@ -47,7 +49,7 @@ public class WorldRenderer {
         bgImg = new Texture("BG.png");
         diedImg = new Texture("died.png");
         font = new BitmapFont();
-        Sound themeSound = audio.newSound(Gdx.files.internal("ThemeSong.mp3"));
+        themeSound = audio.newSound(Gdx.files.internal("ThemeSong.mp3"));
         themeSound.loop();
 
         /* Running Animation */
@@ -74,7 +76,7 @@ public class WorldRenderer {
         Flyer flyer = world.getFlyer();
         Vector2 pos = world.getFlyer().getPosition();
         batch.begin();
-        shapeRenderer.begin(ShapeType.Line);
+        //shapeRenderer.begin(ShapeType.Line);
         //shapeRenderer.rect(world.getFlyer().getRectangle().x, world.getFlyer().getRectangle().y, world.getFlyer().getRectangle().width, world.getFlyer().getRectangle().height);
         batch.draw(bgImg, 0, 0);
         //GOLD
@@ -114,15 +116,30 @@ public class WorldRenderer {
         }
         //PRINT
         if (!world.isGameOver()) {
-            font.draw(batch, "" + world.getScore(), JetpackJoyrideGame.WIDTH - 100 + 20 - 20, JetpackJoyrideGame.HEIGHT - 100 + 20);
+            font.getData().setScale(1.5f);
+            font.draw(batch, "Gold: " + world.getScore(), JetpackJoyrideGame.WIDTH - 160, JetpackJoyrideGame.HEIGHT - 80);
         }
         //PRINT GAME OVER
         if (world.isGameOver()) {
             font.getData().setScale(2);
-            font.draw(batch, "You collected", JetpackJoyrideGame.WIDTH / 2 - 30 - 30 - 30 - 30, JetpackJoyrideGame.HEIGHT / 2 + 30);
-            font.draw(batch, "" + world.getScore() + " Golds!", JetpackJoyrideGame.WIDTH / 2 - 30 - 30 - 30, JetpackJoyrideGame.HEIGHT / 2);
+            font.draw(batch, "You collected", JetpackJoyrideGame.WIDTH / 2 - 120, JetpackJoyrideGame.HEIGHT / 2 + 30);
+            font.draw(batch, "" + world.getScore() + " Golds!", JetpackJoyrideGame.WIDTH / 2 - 90, JetpackJoyrideGame.HEIGHT / 2);
+            font.draw(batch, "Press ESC to exit", JetpackJoyrideGame.WIDTH / 2 - 150, JetpackJoyrideGame.HEIGHT / 2 - 30);
+        }
+        if (world.isGameOverAndExit()) {
+            themeSound.stop();
+            themeSound.dispose();
+            flyer.getCollectSound().stop();
+            flyer.getCollectSound().dispose();
+            System.exit(1);
+        }
+        //Welcome Screen
+        if(!isRunning){
+            font.getData().setScale(2);
+            font.draw(batch, "Press 'SPACE BAR' to fly", JetpackJoyrideGame.WIDTH / 2 - 180, JetpackJoyrideGame.HEIGHT / 2 );
+            if(world.isSpacePress())isRunning = true;
         }
         batch.end();
-        shapeRenderer.end();
+        //shapeRenderer.end();
     }
 }

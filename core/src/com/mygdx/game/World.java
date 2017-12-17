@@ -39,10 +39,6 @@ public class World {
         }
     }
 
-    public void createGold(int posGold) {
-        gold.add(new Gold(jetpackjoyrideGame.WIDTH, posGold, numberOfGold++, this));
-    }
-
     public int createBlock() {
         int top, down;
         block.add(new Block(jetpackjoyrideGame.WIDTH, jetpackjoyrideGame.HEIGHT - 40, random(1, maxBlocklength()), true, this));
@@ -118,18 +114,7 @@ public class World {
         if (!isGameRunning) {
             speed = 0;
         }
-    }
 
-    public int getScore() {
-        return (int) score;
-    }
-
-    public void setScore(int a) {
-        score = a;
-    }
-
-    public void increaseScore() {
-        score += 1;
     }
 
     public void setSpeedbyScore() {
@@ -165,4 +150,29 @@ public class World {
     Flyer getFlyer() {
         return flyer;
     }
+
+    public boolean isGameOverAndExit() {
+        return isGameOver() && Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ;
+    }
+
+    public int getScore() {
+        return (int) score;
+    }
+
+    public void setScore(int a) {
+        score = a;
+    }
+
+    public void increaseScore() {
+        score += 1;
+    }
+
+    public void createGold(int posGold) {
+        gold.add(new Gold(jetpackjoyrideGame.WIDTH, posGold, numberOfGold++, this));
+    }
+
+    public boolean isSpacePress(){
+        return Gdx.input.isKeyPressed(Input.Keys.SPACE);
+    }
+
 }

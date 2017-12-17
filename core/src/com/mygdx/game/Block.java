@@ -33,17 +33,6 @@ public class Block {
         }
     }
 
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public int getLength() {
-        return length;
-    }
 
     public void update() {
         position.x -= world.speed;
@@ -57,9 +46,18 @@ public class Block {
     }
 
     public Texture getTexture() {
-        if (world.isGameOver()) {
-            return transparentImg;
-        }
-        return blockImg;
+        return world.isGameOver() ? transparentImg : blockImg;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public int getLength() {
+        return length;
     }
 }

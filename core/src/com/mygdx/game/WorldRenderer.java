@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -8,14 +9,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.*;
+import static com.badlogic.gdx.Gdx.audio;
+import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class WorldRenderer {
-    World world;
+    private World world;
     private JetpackJoyrideGame jetpackjoyrideGame;
 
     private BitmapFont font;
     private Texture flyImg;
+    private Texture diedImg;
     private Texture bgImg;
 
     /* Animation
@@ -42,7 +45,10 @@ public class WorldRenderer {
         this.world = world;
         flyImg = new Texture("flyer.png");
         bgImg = new Texture("BG.png");
+        diedImg = new Texture("died.png");
         font = new BitmapFont();
+        Sound themeSound = audio.newSound(Gdx.files.internal("ThemeSong.mp3"));
+        themeSound.loop();
 
         /* Running Animation */
         runningCharset = new TextureAtlas(Gdx.files.internal("running.atlas"));
@@ -70,15 +76,14 @@ public class WorldRenderer {
         batch.begin();
         shapeRenderer.begin(ShapeType.Line);
         //shapeRenderer.rect(world.getFlyer().getRectangle().x, world.getFlyer().getRectangle().y, world.getFlyer().getRectangle().width, world.getFlyer().getRectangle().height);
-
         batch.draw(bgImg, 0, 0);
-
         //GOLD
         for (Gold g : world.gold) {
             Vector2 gPos = g.getPosition();
             batch.draw(g.getTexture(), gPos.x - g.RADIUS, gPos.y - g.RADIUS);
             //shapeRenderer.circle(g.getCircle().x, g.getCircle().y, g.getCircle().radius);
         }
+        //BLOCK
         for (Block b : world.block) {
             Vector2 bPos = b.getPosition();
             for (int i = 0; i < b.getLength(); i++) {
@@ -91,22 +96,33 @@ public class WorldRenderer {
                 }
             }
         }
-        if (pos.y >= JetpackJoyrideGame.HEIGHT - flyer.HEIGHT) {
-            elapsed_time += Gdx.graphics.getDeltaTime();
-            runningonRoofFrame = (TextureRegion) runningonRoofAnimation.getKeyFrame(elapsed_time);
-            batch.draw(runningonRoofFrame, pos.x+20, pos.y);
-        } else if (pos.y > 0) {
-            batch.draw(flyImg, pos.x, pos.y);
+        //FLYER
+        if (!world.isGameOver()) {
+            if (pos.y >= JetpackJoyrideGame.HEIGHT - flyer.HEIGHT) {
+                elapsed_time += Gdx.graphics.getDeltaTime();
+                runningonRoofFrame = (TextureRegion) runningonRoofAnimation.getKeyFrame(elapsed_time);
+                batch.draw(runningonRoofFrame, pos.x + 20, pos.y - 20);
+            } else if (pos.y > 0) {
+                batch.draw(flyImg, pos.x, pos.y);
+            } else {
+                elapsed_time += Gdx.graphics.getDeltaTime();
+                runningFrame = (TextureRegion) runningAnimation.getKeyFrame(elapsed_time);
+                batch.draw(runningFrame, pos.x + 20, pos.y);
+            }
         } else {
-            elapsed_time += Gdx.graphics.getDeltaTime();
-            runningFrame = (TextureRegion) runningAnimation.getKeyFrame(elapsed_time);
-            batch.draw(runningFrame, pos.x+20, pos.y);
+            batch.draw(diedImg, pos.x, pos.y);
         }
-        // todo change how to print score aka Font/size
-        font.draw(batch, "" + world.getScore(), JetpackJoyrideGame.WIDTH - 100 + 20 - 20, JetpackJoyrideGame.HEIGHT - 100 + 20);
+        //PRINT
+        if (!world.isGameOver()) {
+            font.draw(batch, "" + world.getScore(), JetpackJoyrideGame.WIDTH - 100 + 20 - 20, JetpackJoyrideGame.HEIGHT - 100 + 20);
+        }
+        //PRINT GAME OVER
+        if (world.isGameOver()) {
+            font.getData().setScale(2);
+            font.draw(batch, "You collected", JetpackJoyrideGame.WIDTH / 2 - 30 - 30 - 30 - 30, JetpackJoyrideGame.HEIGHT / 2 + 30);
+            font.draw(batch, "" + world.getScore() + " Golds!", JetpackJoyrideGame.WIDTH / 2 - 30 - 30 - 30, JetpackJoyrideGame.HEIGHT / 2);
+        }
         batch.end();
         shapeRenderer.end();
-
     }
-
 }

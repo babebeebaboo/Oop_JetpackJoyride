@@ -1,24 +1,23 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.pow;
-import static javafx.application.Platform.exit;
+import static com.badlogic.gdx.Gdx.audio;
 
 public class Flyer {
     public static final int HEIGHT = 80;
     public static final int WIDTH = 70;
     public static final double ACCELERATION = 0.13;
-    public double speed = 0;
+    private double speed = 0;
     private double acceleration = 0;
-    public Rectangle rectangle;
+    private Rectangle rectangle;
+    private Sound collectSound;
 
     private Vector2 position;
-    private Vector2 gPosition;
-    private Vector2 fPosition;
 
     private World world;
 
@@ -26,6 +25,7 @@ public class Flyer {
         position = new Vector2(x, y);
         this.world = world;
         rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
+        collectSound = audio.newSound(Gdx.files.internal("coin-sound-effect-trim2.mp3"));
     }
 
     public Vector2 getPosition() {
@@ -61,6 +61,8 @@ public class Flyer {
         }
         for (Gold g : world.gold) {
             if (checkCollisionGold(g)) {
+                collectSound.stop();
+                collectSound.play();
                 if (!g.collision) {
                     world.increaseScore();
                 }
@@ -69,7 +71,7 @@ public class Flyer {
         }
         for (Block b : world.block) {
             if (checkCollisionBlock(b)) {
-                world.setScore(-1);
+                world.setGameOver();
             }
         }
         rectangle.setPosition(position.x, position.y);

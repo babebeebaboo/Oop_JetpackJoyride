@@ -1,23 +1,22 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import static com.badlogic.gdx.Gdx.audio;
 
 public class JetpackJoyrideGame extends Game {
     public static final int HEIGHT = 768;
     public static final int WIDTH = 1366;
     public static SpriteBatch batch;
     public static ShapeRenderer shapeRenderer;
+    //private Audio audio;
 
     //todo Welcome Page
-    //todo Game Over Page
     //todo items
     @Override
     public void create() {

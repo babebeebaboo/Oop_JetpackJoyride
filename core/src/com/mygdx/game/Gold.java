@@ -4,17 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.badlogic.gdx.math.MathUtils.random;
-
 public class Gold {
-
-    //TODO: Give Gold a new Sprite
     public static final int HEIGHT = 40;
     public static final int WIDTH = 40;
     public static final int RADIUS = 20;
-    public static final double ACCELERATION = 0.13;
-    private double acceleration = 0;
-
 
     private Vector2 position;
     private World world;
@@ -25,37 +18,52 @@ public class Gold {
     private Circle circle;
 
 
-    public Gold(int x, int y, int number,World world ) {
+    public Gold(int x, int y, int number, World world) {
         position = new Vector2(x, y);
         this.world = world;
         this.number = number;
         this.collision = false;
-        goldImg = new Texture("jetpack.png");
+        goldImg = new Texture("gold.png");
+
         transparentImg = new Texture("transparent.png");
-        circle = new Circle(x,y,WIDTH/2);
+        circle = new Circle(x, y, WIDTH / 2);
     }
 
     public Circle getCircle() {
         return circle;
     }
 
-    public Texture getTexture(){
-        if(collision)return transparentImg;
-        else return goldImg;
+    public Texture getTexture() {
+        if (world.isGameOver()) {
+            return transparentImg;
+        }
+        if (collision) {
+            return transparentImg;
+        } else {
+            return goldImg;
+        }
     }
-    public void setCollision(){
-        collision=true;
+
+    public void setCollision() {
+        collision = true;
     }
-    public Vector2 getPosition(){
+
+    public Vector2 getPosition() {
         return position;
     }
-    public void setSpeed(int spd){
+
+    public void setSpeed(int spd) {
         world.speed = spd;
 
     }
+
     public void update() {
         position.x -= world.speed;
-        circle.setPosition(position.x,position.y);
+        if (world.isGameOver()) {
+            circle.setPosition(-100, -100);
+        } else {
+            circle.setPosition(position.x, position.y);
+        }
     }
 
 

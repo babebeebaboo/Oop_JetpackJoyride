@@ -32,7 +32,6 @@ public class Block {
         }
     }
 
-
     public void update() {
         position.x -= world.speed;
         if (world.isGameOver()) {

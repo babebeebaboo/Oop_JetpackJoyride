@@ -59,5 +59,4 @@ public class Gold {
     public void setCollision() {
         collision = true;
     }
-
 }

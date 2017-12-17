@@ -91,5 +91,4 @@ public class Flyer {
     public Sound getCollectSound() {
         return collectSound;
     }
-
 }

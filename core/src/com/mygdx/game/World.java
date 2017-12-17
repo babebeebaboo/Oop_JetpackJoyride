@@ -74,7 +74,6 @@ public class World {
             return 7;
         }
         return 7;
-
     }
 
     public void createMap() {

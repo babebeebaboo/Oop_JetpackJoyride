@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,7 +41,12 @@ public class WorldRenderer {
     private TextureRegion runningonRoofFrame;
 
     /* END Animation */
+
+    //Sound
     private Sound themeSound;
+
+    private static Preferences prefs;
+
 
     public WorldRenderer(JetpackJoyrideGame jetpackjoyrideGame, World world) {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
@@ -51,6 +57,11 @@ public class WorldRenderer {
         font = new BitmapFont();
         themeSound = audio.newSound(Gdx.files.internal("ThemeSong.mp3"));
         themeSound.loop();
+        //High Score
+        prefs = Gdx.app.getPreferences("JetpackJoyride");
+        if(!prefs.contains("highscore")){
+            prefs.putInteger("highscore",0);
+        }
 
         /* Running Animation */
         runningCharset = new TextureAtlas(Gdx.files.internal("running.atlas"));
@@ -118,15 +129,23 @@ public class WorldRenderer {
         if (!world.isGameOver()) {
             font.getData().setScale(1.5f);
             font.draw(batch, "Gold: " + world.getScore(), JetpackJoyrideGame.WIDTH - 160, JetpackJoyrideGame.HEIGHT - 80);
+            font.draw(batch, "High Score: " + prefs.getInteger("highscore"), JetpackJoyrideGame.WIDTH - 160, JetpackJoyrideGame.HEIGHT - 80-23);
+
         }
         //PRINT GAME OVER
         if (world.isGameOver()) {
+            isRunning = true;
+            if(world.getScore() > prefs.getInteger("highscore")){
+                prefs.putInteger("highscore",world.getScore());
+            }
             font.getData().setScale(2);
             font.draw(batch, "You collected", JetpackJoyrideGame.WIDTH / 2 - 120, JetpackJoyrideGame.HEIGHT / 2 + 30);
             font.draw(batch, "" + world.getScore() + " Golds!", JetpackJoyrideGame.WIDTH / 2 - 90, JetpackJoyrideGame.HEIGHT / 2);
-            font.draw(batch, "Press ESC to exit", JetpackJoyrideGame.WIDTH / 2 - 150, JetpackJoyrideGame.HEIGHT / 2 - 30);
+            font.draw(batch, "High Score: "+prefs.getInteger("highscore"), JetpackJoyrideGame.WIDTH / 2 - 150+30, JetpackJoyrideGame.HEIGHT / 2 - 30);
+            font.draw(batch, "Press ESC to exit", JetpackJoyrideGame.WIDTH / 2 - 150, JetpackJoyrideGame.HEIGHT / 2 - 60);
         }
         if (world.isGameOverAndExit()) {
+            prefs.flush();
             themeSound.stop();
             themeSound.dispose();
             flyer.getCollectSound().stop();
@@ -137,7 +156,9 @@ public class WorldRenderer {
         if(!isRunning){
             font.getData().setScale(2);
             font.draw(batch, "Press 'SPACE BAR' to fly", JetpackJoyrideGame.WIDTH / 2 - 180, JetpackJoyrideGame.HEIGHT / 2 );
-            if(world.isSpacePress())isRunning = true;
+            if(world.isSpacePress()){
+                isRunning = true;
+            }
         }
         batch.end();
         //shapeRenderer.end();

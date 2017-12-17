@@ -14,9 +14,7 @@ public class JetpackJoyrideGame extends Game {
     public static final int WIDTH = 1366;
     public static SpriteBatch batch;
     public static ShapeRenderer shapeRenderer;
-    //private Audio audio;
 
-    //todo Welcome Page
     //todo items
     @Override
     public void create() {

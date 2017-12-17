@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +21,7 @@ public class Flyer {
     private Vector2 position;
 
     private World world;
+
 
     public Flyer(int x, int y, World world) {
         position = new Vector2(x, y);
@@ -58,7 +60,7 @@ public class Flyer {
         for (Gold g : world.gold) {
             if (checkCollisionGold(g)) {
                 collectSound.stop();
-                collectSound.play(0.5f);
+                collectSound.play(0.2f);
                 if (!g.collision) {
                     world.increaseScore();
                 }

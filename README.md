@@ -1,4 +1,4 @@
-# Oop_JeypackJoyride
+# Oop_JetpackJoyride
 To import in Eclipse: File -> Import -> Gradle -> Gradle Project
 
 To import to Intellij IDEA: File -> Open -> build.gradle

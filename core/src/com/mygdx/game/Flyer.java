@@ -8,18 +8,18 @@ import com.badlogic.gdx.math.Vector2;
 
 import static com.badlogic.gdx.Gdx.audio;
 
-public class Flyer {
+class Flyer {
     public static final int HEIGHT = 80;
-    public static final int WIDTH = 70;
-    public static final double ACCELERATION = 0.13;
+    private static final int WIDTH = 70;
+    private static final double ACCELERATION = 0.13;
     private double speed = 0;
     private double acceleration = 0;
-    private Sound collectSound;
+    private final Sound collectSound;
 
-    private Vector2 position;
-    private Rectangle rectangle;
+    private final Vector2 position;
+    private final Rectangle rectangle;
 
-    private World world;
+    private final World world;
 
     public Flyer(int x, int y, World world) {
         position = new Vector2(x, y);
@@ -59,7 +59,7 @@ public class Flyer {
             if (checkCollisionGold(g)) {
                 collectSound.stop();
                 collectSound.play(0.2f);
-                if (!g.collision) {
+                if (!g.isCollision()) {
                     world.increaseScore();
                 }
                 g.setCollision();
@@ -76,11 +76,11 @@ public class Flyer {
         rectangle.setPosition(position.x + 20, position.y);
     }
 
-    public boolean checkCollisionBlock(Block b) {
+    private boolean checkCollisionBlock(Block b) {
         return Intersector.overlaps(b.getRectangle(), rectangle);
     }
 
-    public boolean checkCollisionGold(Gold g) {
+    private boolean checkCollisionGold(Gold g) {
         return Intersector.overlaps(g.getCircle(), rectangle);
     }
 

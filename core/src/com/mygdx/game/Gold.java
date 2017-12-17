@@ -4,23 +4,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Gold {
+class Gold {
     public static final int HEIGHT = 40;
-    public static final int WIDTH = 40;
+    private static final int WIDTH = 40;
     public static final int RADIUS = 20;
 
-    private Vector2 position;
-    private World world;
-    public int number;
-    public boolean collision;
-    private Texture goldImg;
-    private Texture transparentImg;
-    private Circle circle;
+    private final Vector2 position;
+    private final World world;
+    private boolean collision;
+    private final Texture goldImg;
+    private final Texture transparentImg;
+    private final Circle circle;
 
-    public Gold(int x, int y, int number, World world) {
+    public Gold(int x, int y, World world) {
         position = new Vector2(x, y);
         this.world = world;
-        this.number = number;
         this.collision = false;
         goldImg = new Texture("gold.png");
 
@@ -40,7 +38,7 @@ public class Gold {
     }
 
     public void update() {
-        position.x -= world.speed;
+        position.x -= world.getSpeed();
         if (world.isGameOver()) {
             circle.setPosition(-100, -100);
         } else {
@@ -58,5 +56,9 @@ public class Gold {
 
     public void setCollision() {
         collision = true;
+    }
+
+    public boolean isCollision() {
+        return collision;
     }
 }

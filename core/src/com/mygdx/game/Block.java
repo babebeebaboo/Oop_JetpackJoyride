@@ -4,19 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Block {
+class Block {
     public static final int HEIGHT = 40;
-    public static final int WIDTH = 40;
+    private static final int WIDTH = 40;
 
-    private Vector2 position;
-    private int length;
-    private Rectangle rectangle;
+    private final Vector2 position;
+    private final Rectangle rectangle;
+    private final int length;
 
-    private Texture blockImg;
-    private Texture transparentImg;
-    private boolean isOnTop;
+    private final Texture blockImg;
+    private final Texture transparentImg;
+    private final boolean isOnTop;
 
-    private World world;
+    private final World world;
 
     public Block(int x, int y, int length, boolean isOnTop, World world) {
         position = new Vector2(x - WIDTH / 2, y);
@@ -33,7 +33,7 @@ public class Block {
     }
 
     public void update() {
-        position.x -= world.speed;
+        position.x -= world.getSpeed();
         if (world.isGameOver()) {
             rectangle.setPosition(-100, -100);
         } else if (isOnTop) {

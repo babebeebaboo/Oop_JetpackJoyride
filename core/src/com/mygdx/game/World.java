@@ -6,30 +6,24 @@ import com.badlogic.gdx.Preferences;
 
 import java.util.LinkedList;
 
-import static com.badlogic.gdx.Gdx.audio;
 import static com.badlogic.gdx.math.MathUtils.random;
 
-public class World {
-    private Flyer flyer;
+@SuppressWarnings("AccessStaticViaInstance")
+class World {
+    private final Flyer flyer;
     private float score;
-    private JetpackJoyrideGame jetpackjoyrideGame;
-    private GameScreen gameScreen;
+    private final JetpackJoyrideGame jetpackjoyrideGame;
 
     //Gold
-    public LinkedList<Gold> gold = new LinkedList<Gold>();
-    private int numberOfGold = 0;
-    private boolean removeGold = false;
+    public final LinkedList<Gold> gold = new LinkedList<Gold>();
 
     //Block
-    public LinkedList<Block> block = new LinkedList<Block>();
-    private boolean removeBlock = false;
+    public final LinkedList<Block> block = new LinkedList<Block>();
 
     //inGame
     private int frame = 0;
-    public int speed = 4;
+    private int speed = 4;
     private boolean isGameRunning = true;
-
-
 
     //HIGH SCORE
     private static Preferences prefs;
@@ -39,7 +33,6 @@ public class World {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
         score = 0;
 
-
         //High Score
         prefs = Gdx.app.getPreferences("JetpackJoyride");
         if (!prefs.contains("highscore")) {
@@ -47,7 +40,7 @@ public class World {
         }
     }
 
-    private void updatePacmanDirection() {
+    private void updateJetPackDirection() {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && isGameRunning) {
             flyer.jumpUp();
         }
@@ -56,13 +49,15 @@ public class World {
         }
     }
 
-    public int createBlock() {
+    @SuppressWarnings("AccessStaticViaInstance")
+    private int createBlock() {
         int top, down;
-        block.add(new Block(jetpackjoyrideGame.WIDTH, jetpackjoyrideGame.HEIGHT - 40, random(1, maxBlocklength()), true, this));
+        block.add(new Block(JetpackJoyrideGame.WIDTH, JetpackJoyrideGame.HEIGHT - 40, random(1, maxBlocklength()), true, this));
         top = block.getLast().getLength();
-        block.add(new Block(jetpackjoyrideGame.WIDTH, 0, random(1, maxBlocklength()), false, this));
+        block.add(new Block(JetpackJoyrideGame.WIDTH, 0, random(1, maxBlocklength()), false, this));
         down = block.getLast().getLength();
-        return random((down + 1) * block.getLast().HEIGHT, jetpackjoyrideGame.HEIGHT - (top + 1) * block.getLast().HEIGHT);
+        //noinspection AccessStaticViaInstance
+        return random((down + 1) * block.getLast().HEIGHT, JetpackJoyrideGame.HEIGHT - (top + 1) * block.getLast().HEIGHT);
     }
 
     private int maxBlocklength() {
@@ -90,7 +85,7 @@ public class World {
         return 7;
     }
 
-    public void createMap() {
+    private void createMap() {
         if (isGameOver()) {
             return;
         }
@@ -100,10 +95,10 @@ public class World {
         }
     }
 
-    public void update(float delta) {
-        removeGold = false;
-        removeBlock = false;
-        updatePacmanDirection();
+    public void update() {
+        boolean removeGold = false;
+        boolean removeBlock = false;
+        updateJetPackDirection();
         flyer.update();
         if (frame >= 20 * 1.5) {
             createMap();
@@ -142,7 +137,7 @@ public class World {
         }
     }
 
-    public void setSpeedbyScore() {
+    private void setSpeedbyScore() {
         if (score < 0) {
             speed = 0;
         } else if (score < 10) {
@@ -168,8 +163,8 @@ public class World {
         return flyer;
     }
 
-    public void createGold(int posGold) {
-        gold.add(new Gold(jetpackjoyrideGame.WIDTH, posGold, numberOfGold++, this));
+    private void createGold(int posGold) {
+        gold.add(new Gold(JetpackJoyrideGame.WIDTH, posGold, this));
     }
 
     public void setGameOver() {
@@ -184,7 +179,7 @@ public class World {
         return Gdx.input.isKeyPressed(Input.Keys.SPACE);
     }
 
-    public boolean isGameOverAndExit() {
+    private boolean isGameOverAndExit() {
         return isGameOver() && Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
     }
 
@@ -198,5 +193,9 @@ public class World {
 
     public static Preferences getPrefs() {
         return prefs;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

@@ -12,6 +12,7 @@ public class JetpackJoyrideGame extends Game {
     public static final int WIDTH = 1366;
 
     public static SpriteBatch batch;
+
     //Sound
     private Sound themeSound;
 

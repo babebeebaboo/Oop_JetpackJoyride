@@ -7,6 +7,6 @@ To import to NetBeans: File -> Open Project...
 
 
 
-##### 01204215 Object Oriented Programming Laboratory
+##### 01204215 Object Oriented Programming Laboratory @Kasetsart University
 
 Supakorn Wongsawang 5910500147

@@ -5,18 +5,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Block {
-
     public static final int HEIGHT = 40;
     public static final int WIDTH = 40;
 
     private Vector2 position;
-    private World world;
     private int length;
+    private Rectangle rectangle;
+
     private Texture blockImg;
     private Texture transparentImg;
-
-    private Rectangle rectangle;
     private boolean isOnTop;
+
+    private World world;
 
     public Block(int x, int y, int length, boolean isOnTop, World world) {
         position = new Vector2(x - WIDTH / 2, y);
@@ -24,7 +24,6 @@ public class Block {
         this.length = length;
         blockImg = new Texture("wall2.png");
         transparentImg = new Texture("transparent.png");
-
         this.isOnTop = isOnTop;
         if (isOnTop) {
             rectangle = new Rectangle(x - WIDTH / 2, y - HEIGHT * length, WIDTH, HEIGHT * length);

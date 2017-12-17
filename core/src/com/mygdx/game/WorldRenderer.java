@@ -6,12 +6,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import static com.badlogic.gdx.Gdx.audio;
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class WorldRenderer {
     private World world;
@@ -27,40 +25,46 @@ public class WorldRenderer {
        CREDIT: http://www.pixnbgames.com/blog/libgdx/frame-by-frame-animations-in-libgdx/
     */
 
-    private static float FRAME_DURATION = .05f * 2;
-    private float elapsed_time = 0f;
+        private static float FRAME_DURATION = .05f * 2;
+        private float elapsed_time = 0f;
 
-    //Running
-    private TextureAtlas runningCharset;
-    private Animation runningAnimation;
-    private TextureRegion runningFrame;
+        //Running
+        private TextureAtlas runningCharset;
+        private Animation runningAnimation;
+        private TextureRegion runningFrame;
 
-    //RunningOnRoof
-    private TextureAtlas runningonRoofCharset;
-    private Animation runningonRoofAnimation;
-    private TextureRegion runningonRoofFrame;
+        //RunningOnRoof
+        private TextureAtlas runningonRoofCharset;
+        private Animation runningonRoofAnimation;
+        private TextureRegion runningonRoofFrame;
 
     /* END Animation */
 
     //Sound
     private Sound themeSound;
 
+    //HIGH SCORE
     private static Preferences prefs;
-
 
     public WorldRenderer(JetpackJoyrideGame jetpackjoyrideGame, World world) {
         this.jetpackjoyrideGame = jetpackjoyrideGame;
         this.world = world;
+
+        //IMAGE
         flyImg = new Texture("flyer.png");
         bgImg = new Texture("BG.png");
         diedImg = new Texture("died.png");
-        font = new BitmapFont();
+
+        font = new BitmapFont();//FONT
+
+        //SOUND
         themeSound = audio.newSound(Gdx.files.internal("ThemeSong.mp3"));
         themeSound.loop();
+
         //High Score
         prefs = Gdx.app.getPreferences("JetpackJoyride");
-        if(!prefs.contains("highscore")){
-            prefs.putInteger("highscore",0);
+        if (!prefs.contains("highscore")) {
+            prefs.putInteger("highscore", 0);
         }
 
         /* Running Animation */
@@ -82,7 +86,7 @@ public class WorldRenderer {
 
         world.update(delta);
         SpriteBatch batch = jetpackjoyrideGame.batch;
-        ShapeRenderer shapeRenderer = jetpackjoyrideGame.shapeRenderer;
+        //ShapeRenderer shapeRenderer = jetpackjoyrideGame.shapeRenderer;
 
         Flyer flyer = world.getFlyer();
         Vector2 pos = world.getFlyer().getPosition();
@@ -129,21 +133,21 @@ public class WorldRenderer {
         if (!world.isGameOver()) {
             font.getData().setScale(1.5f);
             font.draw(batch, "Gold: " + world.getScore(), JetpackJoyrideGame.WIDTH - 160, JetpackJoyrideGame.HEIGHT - 80);
-            font.draw(batch, "High Score: " + prefs.getInteger("highscore"), JetpackJoyrideGame.WIDTH - 160, JetpackJoyrideGame.HEIGHT - 80-23);
-
+            font.draw(batch, "High Score: " + prefs.getInteger("highscore"), JetpackJoyrideGame.WIDTH - 160, JetpackJoyrideGame.HEIGHT - 103);
         }
         //PRINT GAME OVER
         if (world.isGameOver()) {
             isRunning = true;
-            if(world.getScore() > prefs.getInteger("highscore")){
-                prefs.putInteger("highscore",world.getScore());
+            if (world.getScore() > prefs.getInteger("highscore")) {
+                prefs.putInteger("highscore", world.getScore());
             }
             font.getData().setScale(2);
             font.draw(batch, "You collected", JetpackJoyrideGame.WIDTH / 2 - 120, JetpackJoyrideGame.HEIGHT / 2 + 30);
             font.draw(batch, "" + world.getScore() + " Golds!", JetpackJoyrideGame.WIDTH / 2 - 90, JetpackJoyrideGame.HEIGHT / 2);
-            font.draw(batch, "High Score: "+prefs.getInteger("highscore"), JetpackJoyrideGame.WIDTH / 2 - 150+30, JetpackJoyrideGame.HEIGHT / 2 - 30);
+            font.draw(batch, "High Score: " + prefs.getInteger("highscore"), JetpackJoyrideGame.WIDTH / 2 - 120, JetpackJoyrideGame.HEIGHT / 2 - 30);
             font.draw(batch, "Press ESC to exit", JetpackJoyrideGame.WIDTH / 2 - 150, JetpackJoyrideGame.HEIGHT / 2 - 60);
         }
+        //Garbadge Cleaner EXIT
         if (world.isGameOverAndExit()) {
             prefs.flush();
             themeSound.stop();
@@ -153,10 +157,10 @@ public class WorldRenderer {
             System.exit(1);
         }
         //Welcome Screen
-        if(!isRunning){
+        if (!isRunning) {
             font.getData().setScale(2);
-            font.draw(batch, "Press 'SPACE BAR' to fly", JetpackJoyrideGame.WIDTH / 2 - 180, JetpackJoyrideGame.HEIGHT / 2 );
-            if(world.isSpacePress()){
+            font.draw(batch, "Press 'SPACE BAR' to fly", JetpackJoyrideGame.WIDTH / 2 - 180, JetpackJoyrideGame.HEIGHT / 2);
+            if (world.isSpacePress()) {
                 isRunning = true;
             }
         }

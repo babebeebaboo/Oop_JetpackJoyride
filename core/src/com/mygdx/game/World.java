@@ -12,19 +12,22 @@ public class World {
     private float score;
     private JetpackJoyrideGame jetpackjoyrideGame;
     private GameScreen gameScreen;
+
     //Gold
     public LinkedList<Gold> gold = new LinkedList<Gold>();
     private int numberOfGold = 0;
     private boolean removeGold = false;
+
     //Block
     public LinkedList<Block> block = new LinkedList<Block>();
     private boolean removeBlock = false;
+
     //inGame
     private int frame = 0;
     public int speed = 4;
     private boolean isGameRunning = true;
 
-    World(JetpackJoyrideGame jetpackjoyrideGame) {
+    public World(JetpackJoyrideGame jetpackjoyrideGame) {
         flyer = new Flyer(100, 100, this);
         this.jetpackjoyrideGame = jetpackjoyrideGame;
         score = 0;
@@ -71,6 +74,7 @@ public class World {
             return 7;
         }
         return 7;
+
     }
 
     public void createMap() {
@@ -114,7 +118,6 @@ public class World {
         if (!isGameRunning) {
             speed = 0;
         }
-
     }
 
     public void setSpeedbyScore() {
@@ -139,40 +142,35 @@ public class World {
         }
     }
 
-    public boolean isGameOver() {
-        return !isGameRunning;
-    }
-
-    public void setGameOver() {
-        isGameRunning = false;
-    }
-
     Flyer getFlyer() {
         return flyer;
-    }
-
-    public boolean isGameOverAndExit() {
-        return isGameOver() && Gdx.input.isKeyPressed(Input.Keys.ESCAPE) ;
-    }
-
-    public int getScore() {
-        return (int) score;
-    }
-
-    public void setScore(int a) {
-        score = a;
-    }
-
-    public void increaseScore() {
-        score += 1;
     }
 
     public void createGold(int posGold) {
         gold.add(new Gold(jetpackjoyrideGame.WIDTH, posGold, numberOfGold++, this));
     }
 
+    public void setGameOver() {
+        isGameRunning = false;
+    }
+
+    public void increaseScore() {
+        score += 1;
+    }
+
     public boolean isSpacePress(){
         return Gdx.input.isKeyPressed(Input.Keys.SPACE);
     }
 
+    public boolean isGameOverAndExit() {
+        return isGameOver() && Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
+    }
+
+    public boolean isGameOver() {
+        return !isGameRunning;
+    }
+
+    public int getScore() {
+        return (int) score;
+    }
 }

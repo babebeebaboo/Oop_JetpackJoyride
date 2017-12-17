@@ -17,7 +17,6 @@ public class Gold {
     private Texture transparentImg;
     private Circle circle;
 
-
     public Gold(int x, int y, int number, World world) {
         position = new Vector2(x, y);
         this.world = world;
@@ -27,10 +26,6 @@ public class Gold {
 
         transparentImg = new Texture("transparent.png");
         circle = new Circle(x, y, WIDTH / 2);
-    }
-
-    public Circle getCircle() {
-        return circle;
     }
 
     public Texture getTexture() {
@@ -44,19 +39,6 @@ public class Gold {
         }
     }
 
-    public void setCollision() {
-        collision = true;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public void setSpeed(int spd) {
-        world.speed = spd;
-
-    }
-
     public void update() {
         position.x -= world.speed;
         if (world.isGameOver()) {
@@ -64,6 +46,18 @@ public class Gold {
         } else {
             circle.setPosition(position.x, position.y);
         }
+    }
+
+    public Circle getCircle() {
+        return circle;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void setCollision() {
+        collision = true;
     }
 
 

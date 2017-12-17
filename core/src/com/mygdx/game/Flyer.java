@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,18 +14,17 @@ public class Flyer {
     public static final double ACCELERATION = 0.13;
     private double speed = 0;
     private double acceleration = 0;
-    private Rectangle rectangle;
     private Sound collectSound;
 
     private Vector2 position;
+    private Rectangle rectangle;
 
     private World world;
-
 
     public Flyer(int x, int y, World world) {
         position = new Vector2(x, y);
         this.world = world;
-        rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
+        rectangle = new Rectangle(x+20, y, WIDTH-20, HEIGHT);
         collectSound = audio.newSound(Gdx.files.internal("coin-sound-effect-trim2.mp3"));
     }
 
@@ -75,11 +73,7 @@ public class Flyer {
         if(world.isGameOver()){
             jumpDown();
         }
-        rectangle.setPosition(position.x, position.y);
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
+        rectangle.setPosition(position.x+20, position.y);
     }
 
     public boolean checkCollisionBlock(Block b) {

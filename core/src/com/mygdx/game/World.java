@@ -135,6 +135,9 @@ class World {
             flyer.getCollectSound().dispose();
             System.exit(1);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.R)){
+            prefs.putInteger("highscore",0);
+        }
     }
 
     private void setSpeedbyScore() {
